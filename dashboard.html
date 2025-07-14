@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – SaltyVerse Portal</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #0b0c2a;
+      color: white;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    h1 {
+      color: #ff3cac;
+      margin-bottom: 1rem;
+    }
+    .logout-btn {
+      padding: 10px 24px;
+      font-size: 1rem;
+      background: #ff3cac;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .logout-btn:hover {
+      background: #ff66b7;
+    }
+    .panel {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #ff3cac44;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>Welcome to the SaltyVerse Dashboard</h1>
+    <p>You’re logged in. Shaniqua says behave. 👑</p>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      'https://ekinqlmecuptglmeuuls.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVraW5xbG1lY3VwdGdsbWV1dWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzNjUzMjEsImV4cCI6MjA2Nzk0MTMyMX0.StMpcfVqjepfnO7jteLJeCHChLdQ1IPep-5Nomc_hQQ'
+    );
+
+    async function checkSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        window.location.href = 'login.html';
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href = 'login.html';
+    }
+
+    checkSession();
+  </script>
+</body>
+</html>
